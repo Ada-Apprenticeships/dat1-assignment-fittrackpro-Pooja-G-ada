@@ -50,25 +50,25 @@ CREATE TABLE locations (
 -- 2. members
 CREATE TABLE members (
     member_id               INTEGER     PRIMARY KEY,
-    first_name              TEXT        NOT NULL        CHECK (LENGTH(name) <= 50),
-    last_name               TEXT        NOT NULL        DEFAULT 'No Surname',
-    email                   TEXT        NOT NULL        UNIQUE      CHECK(email LIKE'%@%'),
-    phone_number            TEXT        NOT NULL        UNIQUE      CHECK(phone_number GLOB '555-[0-9][0-9][0-9][0-9]'),
+    first_name              TEXT        NOT NULL                                CHECK (LENGTH(first_name) <= 50),
+    last_name               TEXT        NOT NULL        DEFAULT 'No Surname'    CHECK (LENGTH(last_name) <= 50),       
+    email                   TEXT        NOT NULL        UNIQUE                  CHECK(email LIKE'%@%'),
+    phone_number            TEXT        NOT NULL        UNIQUE                  CHECK(phone_number GLOB '555-[0-9][0-9][0-9][0-9]'),
     date_of_birth           DATE        NOT NULL,
     join_date               DATE        NOT NULL        DEFAULT (CURRENT_DATE),
     emergency_contact_name  TEXT        NOT NULL,
-    emergency_contact_phone TEXT        NOT NULL        CHECK(phone_number LIKE'___-____')
+    emergency_contact_phone TEXT        NOT NULL                                CHECK(phone_number LIKE'___-____')
 );
 -- 3. staff
 CREATE TABLE staff (
     staff_id        INTEGER     PRIMARY KEY,
-    first_name      TEXT        NOT NULL                    CHECK (LENGTH(name) <= 50),
-    last_name       TEXT        NOT NULL        DEFAULT 'No Surname',
-    email           TEXT        NOT NULL        UNIQUE      CHECK(email LIKE'%@%'),
-    phone_number    TEXT        NOT NULL        UNIQUE      CHECK(phone_number GLOB '555-[0-9][0-9][0-9][0-9]'),
-    position        TEXT                                    CHECK(position IN ('Trainer','Manager','Receptionist','Maintenance')),
+    first_name      TEXT        NOT NULL                                CHECK (LENGTH(first_name) <= 50),
+    last_name       TEXT        NOT NULL        DEFAULT 'No Surname'    CHECK (LENGTH(first_name) <= 50),
+    email           TEXT        NOT NULL        UNIQUE                  CHECK(email LIKE'%@%'),
+    phone_number    TEXT        NOT NULL        UNIQUE                  CHECK(phone_number GLOB '555-[0-9][0-9][0-9][0-9]'),
+    position        TEXT                                                CHECK(position IN ('Trainer','Manager','Receptionist','Maintenance')),
     hire_date       DATE        DEFAULT (CURRENT_DATE),
-    location_id     REFERENCES locations(location_id)       ON DELETE SET NULL  -- Example: If a location is deleted, set location_id in staff to NULL
+    location_id     REFERENCES locations(location_id)                   ON DELETE SET NULL  -- Example: If a location is deleted, set location_id in staff to NULL
 );
 -- 4. equipment
 CREATE TABLE equipment (
