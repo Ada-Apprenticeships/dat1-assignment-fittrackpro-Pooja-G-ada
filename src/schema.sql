@@ -94,8 +94,8 @@ CREATE TABLE class_schedule (
     schedule_id     INTEGER     PRIMARY KEY,
     class_id        REFERENCES classes(class_id)    ON DELETE SET NULL,  -- Example: If a class is deleted, set class_id in class_schedule to NULL
     staff_id        REFERENCES staff(staff_id)      ON DELETE SET NULL,  -- Example: If a staff is deleted, set staff_id in class_schedule to NULL
-    start_time      TEXT        NOT NULL            CHECK(start_time LIKE '____-__-__ __:__:__'), 
-    end_time        TEXT        NOT NULL            CHECK(end_time LIKE '____-__-__ __:__:__')
+    start_time      DATETIME    DEFAULT CURRENT_TIMESTAMP,
+    end_time        DATETIME    DEFAULT CURRENT_TIMESTAMP 
 );
 -- 7. memberships
 CREATE TABLE memberships (
@@ -111,8 +111,8 @@ CREATE TABLE attendance (
     attendance_id       INTEGER     PRIMARY KEY,
     member_id           REFERENCES members(member_id)       ON DELETE SET NULL,  -- Example: If a member is deleted, set member_id in attendance to NULL
     location_id         REFERENCES locations(location_id)   ON DELETE SET NULL,  -- Example: If a location is deleted, set location_id in attendance to NULL
-    check_in_time       TEXT        NOT NULL                CHECK(check_in_time LIKE '____-__-__ __:__:__'), 
-    check_out_time      TEXT        NOT NULL                CHECK(check_out_time LIKE '____-__-__ __:__:__')
+    check_in_time       DATETIME    DEFAULT CURRENT_TIMESTAMP,                 
+    check_out_time      DATETIME    DEFAULT CURRENT_TIMESTAMP                 
 );
 -- 9. class_attendance
 CREATE TABLE class_attendance (
@@ -126,7 +126,7 @@ CREATE TABLE payments (
     payment_id      INTEGER     PRIMARY KEY,
     member_id       REFERENCES members(member_id)       ON DELETE SET NULL,  -- Example: If a member is deleted, set member_id in payments to NULL
     amount          INTEGER     DECIMAL(10,2)           NOT NULL                CHECK(amount >= 0),
-    payment_date    DATE        NOT NULL                CHECK(payment_date LIKE '____-__-__ __:__:__'),
+    payment_date    DATETIME    DEFAULT CURRENT_TIMESTAMP,                
     payment_method  TEXT        NOT NULL                CHECK(payment_method IN ('Credit Card', 'Bank Transfer', 'PayPal', 'Cash')),
     payment_type    TEXT        NOT NULL                CHECK(payment_type IN ('Monthly membership fee', 'Day pass'))
 );

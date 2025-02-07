@@ -15,14 +15,15 @@ DELETE
 FROM payments 
 WHERE member_id = 11 AND payment_date = '2025-01-20 11:00:00';
 
--- -----! ACTUAL QUERY BELOW ADDS A PAYMENT RECORD FOR MEMBERSHIP !-----   
+-- -----! Insert a new payment record for member with ID 11 !-----   
 INSERT INTO payments (member_id, amount, payment_date, payment_method, payment_type)
-VALUES (11, 50.00, '2025-01-20 11:00:00', 'Credit Card', 'Monthly membership fee');
+VALUES (11, 50.00, CURRENT_TIMESTAMP, 'Credit Card', 'Monthly membership fee');
 
 -- -----! DISPLAYS THE NEW RECORD ADDED !-----
 SELECT * 
 FROM payments 
-WHERE member_id = 11 AND payment_date = '2025-01-20 11:00:00';
+ORDER BY payment_date DESC
+LIMIT 1;
 
 
 -- 2. Calculate total revenue from membership fees for each month of the last year
