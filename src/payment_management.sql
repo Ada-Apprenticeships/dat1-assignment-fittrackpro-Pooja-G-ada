@@ -10,7 +10,7 @@ PRAGMA foreign_keys = ON;
 -- 1. Record a payment for a membership
 -- TODO: Write a query to record a payment for a membership
 
--- -----! DELETE QUERY SO THAT SAME ROW DOES NOT GET ADDED EVERYTIME I RE-RAN THIS SQL FILE!-----
+-- -----! DELETE QUERY SO THAT SAME ROW DOES NOT GET ADDED/DUPLICATED EVERYTIME I RE-RAN THIS SQL FILE!-----
 DELETE 
 FROM payments 
 WHERE member_id = 11 AND payment_date = '2025-01-20 11:00:00';
