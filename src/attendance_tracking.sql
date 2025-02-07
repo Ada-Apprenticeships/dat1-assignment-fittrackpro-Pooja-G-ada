@@ -92,3 +92,6 @@ FROM (
 ) AS daily_attendance
 JOIN locations l ON daily_attendance.location_id = l.location_id
 GROUP BY location_name;
+
+-- ================================================================================================
+

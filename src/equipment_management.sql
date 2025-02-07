@@ -40,3 +40,5 @@ SELECT
     AVG(JULIANDAY(CURRENT_DATE) - JULIANDAY(purchase_date)) AS avg_age_days -- JULIANDAY() function converts the date to Julian Day numbers (numeric representations of dates)
 FROM equipment
 GROUP BY type;
+
+-- ================================================================================================

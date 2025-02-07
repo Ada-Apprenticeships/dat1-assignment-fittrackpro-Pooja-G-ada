@@ -117,3 +117,6 @@ LIMIT 5;
 SELECT 
     ROUND((COUNT(*) * 1.0) / COUNT(DISTINCT member_id), 1) AS avg_classes_per_member
 FROM class_attendance;
+
+
+-- ================================================================================================

@@ -48,3 +48,5 @@ SELECT
 FROM memberships ms
 JOIN members m ON ms.member_id = m.member_id
 WHERE ms.end_date <= '2025-12-31';
+
+-- ================================================================================================

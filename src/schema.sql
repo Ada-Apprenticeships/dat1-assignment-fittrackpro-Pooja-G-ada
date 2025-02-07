@@ -32,6 +32,7 @@ DROP TABLE IF EXISTS locations;
 -- );
 
 -- TODO: Create the following tables:
+-- ======================================================================================================================
 -- 1. locations
 CREATE TABLE locations (
     location_id     INTEGER     PRIMARY KEY,
@@ -47,6 +48,9 @@ CREATE TABLE locations (
         opening_hours GLOB '[0-9]:[0-5][0-9]-[0-9]:[0-5][0-9]'
         )
 );
+
+
+-- ======================================================================================================================
 -- 2. members
 CREATE TABLE members (
     member_id               INTEGER     PRIMARY KEY,
@@ -59,6 +63,9 @@ CREATE TABLE members (
     emergency_contact_name  TEXT        NOT NULL,
     emergency_contact_phone TEXT        NOT NULL                                CHECK(phone_number LIKE'___-____')
 );
+
+
+-- ======================================================================================================================
 -- 3. staff
 CREATE TABLE staff (
     staff_id        INTEGER     PRIMARY KEY,
@@ -70,6 +77,9 @@ CREATE TABLE staff (
     hire_date       DATE        DEFAULT (CURRENT_DATE),
     location_id     REFERENCES locations(location_id)                   ON DELETE SET NULL  -- Example: If a location is deleted, set location_id in staff to NULL
 );
+
+
+-- ======================================================================================================================
 -- 4. equipment
 CREATE TABLE equipment (
     equipment_id            INTEGER     PRIMARY KEY,
@@ -80,6 +90,9 @@ CREATE TABLE equipment (
     next_maintenance_date   DATE        NOT NULL                CHECK(next_maintenance_date > last_maintenance_date),
     location_id             REFERENCES locations(location_id)   ON DELETE SET NULL  -- Example: If a location is deleted, set location_id in equipment to NULL
 );
+
+
+-- ======================================================================================================================
 -- 5. classes
 CREATE TABLE classes (
     class_id        INTEGER     PRIMARY KEY,
@@ -89,6 +102,9 @@ CREATE TABLE classes (
     duration        INTEGER     NOT NULL,
     location_id     REFERENCES locations(location_id)       ON DELETE SET NULL  -- Example: If a location is deleted, set location_id in classes to NULL
 );
+
+
+-- ======================================================================================================================
 -- 6. class_schedule
 CREATE TABLE class_schedule (
     schedule_id     INTEGER     PRIMARY KEY,
@@ -97,6 +113,9 @@ CREATE TABLE class_schedule (
     start_time      DATETIME    DEFAULT CURRENT_TIMESTAMP,
     end_time        DATETIME    DEFAULT CURRENT_TIMESTAMP 
 );
+
+
+-- ======================================================================================================================
 -- 7. memberships
 CREATE TABLE memberships (
     membership_id       INTEGER     PRIMARY KEY,
@@ -106,6 +125,9 @@ CREATE TABLE memberships (
     end_date            DATE        NOT NULL            CHECK(end_date > start_date),
     status              CHECK(status in ('Active', 'Inactive'))
 );
+
+
+-- ======================================================================================================================
 -- 8. attendance
 CREATE TABLE attendance (
     attendance_id       INTEGER     PRIMARY KEY,
@@ -114,6 +136,9 @@ CREATE TABLE attendance (
     check_in_time       DATETIME    DEFAULT CURRENT_TIMESTAMP,                 
     check_out_time      DATETIME    DEFAULT CURRENT_TIMESTAMP                 
 );
+
+
+-- ======================================================================================================================
 -- 9. class_attendance
 CREATE TABLE class_attendance (
     class_attendance_id     INTEGER     PRIMARY KEY,
@@ -121,6 +146,9 @@ CREATE TABLE class_attendance (
     member_id               REFERENCES members(member_id)           ON DELETE SET NULL,  -- Example: If a member is deleted, set member_id in class_attendance to NULL
     attendance_status       TEXT        CHECK(attendance_status IN ('Registered', 'Attended', 'Unattended'))
 );
+
+
+-- ======================================================================================================================
 -- 10. payments
 CREATE TABLE payments (
     payment_id      INTEGER     PRIMARY KEY,
@@ -130,6 +158,9 @@ CREATE TABLE payments (
     payment_method  TEXT        NOT NULL                CHECK(payment_method IN ('Credit Card', 'Bank Transfer', 'PayPal', 'Cash')),
     payment_type    TEXT        NOT NULL                CHECK(payment_type IN ('Monthly membership fee', 'Day pass'))
 );
+
+
+-- ======================================================================================================================
 -- 11. personal_training_sessions
 CREATE TABLE personal_training_sessions (
     session_id      INTEGER     PRIMARY KEY,
@@ -140,6 +171,9 @@ CREATE TABLE personal_training_sessions (
     end_time        TEXT        NOT NULL                CHECK(end_time LIKE '__:__:__'), 
     notes           TEXT 
 );
+
+
+-- ======================================================================================================================
 -- 12. member_health_metrics
 CREATE TABLE member_health_metrics (
     metric_id               INTEGER     PRIMARY KEY,
@@ -150,6 +184,9 @@ CREATE TABLE member_health_metrics (
     muscle_mass             INTEGER     DECIMAL(10,2),
     bmi                     INTEGER     DECIMAL(10,2)           NOT NULL
 );
+
+
+-- ======================================================================================================================
 -- 13. equipment_maintenance_log
 CREATE TABLE equipment_maintenance_log (
     log_id                  INTEGER     PRIMARY KEY,
@@ -158,6 +195,9 @@ CREATE TABLE equipment_maintenance_log (
     description             TEXT        NOT NULL,
     staff_id                REFERENCES staff(staff_id)             ON DELETE SET NULL  -- Example: If a staff is deleted, set staff_id in equipment_maintenance_log to NULL
 );
+
+
+-- ======================================================================================================================
 
 -- After creating the tables, you can import the sample data using:
 -- `.read data/sample_data.sql` in a sql file or `npm run import` in the terminal

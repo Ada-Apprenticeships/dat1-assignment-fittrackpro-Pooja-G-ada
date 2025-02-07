@@ -51,3 +51,6 @@ SELECT
     payment_method
 FROM payments
 WHERE payment_type LIKE 'Day Pass';
+
+
+-- ================================================================================================
