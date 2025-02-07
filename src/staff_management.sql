@@ -21,7 +21,7 @@ ORDER BY role; -- order the staff by their role
 -- 2. Find trainers with one or more personal training session in the next 30 days
 -- TODO: Write a query to find trainers with one or more personal training session in the next 30 days
 
---------! 2.1FIRST SUBQUERY TO FIND SESSIONS IN NEXT 30 DAYS !----------
+--------! 2.1 FIRST SUBQUERY TO FIND SESSIONS IN NEXT 30 DAYS !----------
 SELECT
     staff_id AS trainer_id,
     session_date
@@ -40,7 +40,7 @@ WHERE session_date >= DATE('now') -- from today
    AND session_date < DATE('now', '+30 days'); -- 30 days starting tomorrow
 
 --------! 2.3 USE SUBQURY TABLE FORM 2.2 TO GET trainers with one or more personal training session !----------
---------! FINAL QUERY !----------
+--------! FINAL/MAIN QUERY !----------
 SELECT
     trainer_id,
     trainer_name,
