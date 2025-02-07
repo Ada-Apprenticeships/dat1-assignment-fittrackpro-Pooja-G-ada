@@ -214,17 +214,17 @@ You can then add any other test inserts as you like
 Use this as a checklist to keep track of your progress.
 
 #### 1. User Management (user_management.sql)
-1. [✅] 1.1 Retrieve all members
-2. [✅] 1.2 Update a member's contact information
-3. [✅] 1.3 Count total number of members
-4. [✅] 1.4  Find member with the most class registrations
-5. [✅] 1.5 Find member with the least class registrations
-6. [✅] 1.6 Calculate the percentage of members who have attended at least one class
+1. [ ] 1.1 Retrieve all members
+2. [ ] 1.2 Update a member's contact information
+3. [ ] 1.3 Count total number of members
+4. [ ] 1.4  Find member with the most class registrations
+5. [ ] 1.5 Find member with the least class registrations
+6. [ ] 1.6 Calculate the percentage of members who have attended at least one class
 
 #### 2. Payment Management (payment_management.sql)
-1. [ ✅] 2.1 Record a payment for a membership
-2. [ ✅] 2.2 Calculate total revenue from membership fees for each month of the last year
-3. [ ✅] 2.3 Find all day pass purchases
+1. [ ] 2.1 Record a payment for a membership
+2. [ ] 2.2 Calculate total revenue from membership fees for each month of the last year
+3. [ ] 2.3 Find all day pass purchases
 
 #### 3. Equipment Management (equipment_management.sql)
 1. [ ] 3.1 Find equipment due for maintenance in the next 30 days

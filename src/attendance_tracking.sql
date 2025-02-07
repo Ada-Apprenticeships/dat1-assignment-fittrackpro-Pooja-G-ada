@@ -7,28 +7,31 @@ PRAGMA foreign_keys = ON;
 
 -- Attendance Tracking Queries
 
+-- ================================================================================================
 -- 1. Record a member's gym visit
 -- TODO: Write a query to record a member's gym visit
 
--- -----! DELETE QUERY SO THAT SAME ROW DOES NOT GET ADDED/DUPLICATED EVERYTIME I RE-RAN THIS SQL FILE!-----
+--------! [MY OWN TESTING]: 1.1. DELETE QUERY SO THAT SAME ROW DOES NOT GET ADDED/DUPLICATED EVERYTIME I RE-RAN THIS SQL FILE!-----
 DELETE 
 FROM attendance
 WHERE member_id = 7 AND location_id = 1;
 
---------! Insert a new attendance record for member with ID 7 at Downtown Fitness !----------
+-------- *****  [MAIN QUERY/FINAL SOLUTION]: 1.2. Insert a new attendance record for member with ID 7 at Downtown Fitness ***** ----------
 INSERT INTO attendance (member_id, location_id)
 VALUES (7, 1);
 
--- -----! DISPLAYS THE NEW RECORD ADDED !-----
+-- -----! [MY OWN TESTING]: 1.3. DISPLAYS THE NEW RECORD ADDED !-----
 SELECT * 
 FROM attendance
 ORDER BY check_in_time DESC
 LIMIT 1;
 
+
+-- ================================================================================================
 -- 2. Retrieve a member's attendance history
 -- TODO: Write a query to retrieve a member's attendance history
 
---------! Get attendance history for member with ID 5 !----------
+--------! attendance history for member with ID 5 !----------
 SELECT
     strftime('%Y-%m-%d', check_in_time) AS visit_date, --extracts year, month and date in YYYY-MM-DD FORMAT.
     check_in_time,
@@ -36,6 +39,8 @@ SELECT
 FROM attendance
 WHERE member_id = 5;
 
+
+-- ================================================================================================
 -- 3. Find the busiest day of the week based on gym visits
 -- TODO: Write a query to find the busiest day of the week based on gym visits
 
@@ -58,19 +63,21 @@ GROUP BY day_of_week
 ORDER BY visit_count DESC
 LIMIT 1;
     
+
+-- ================================================================================================
 -- 4. Calculate the average daily attendance for each location
 -- TODO: Write a query to calculate the average daily attendance for each location
 
---------! SUB QUERY TO FIND daily_count COLUMN WHICH COUNTS VISITS GROUPED BY DATE & LOCATION (SUB TABLE)!----------
--- SELECT 
---         location_id, 
---         strftime('%Y-%m-%d', check_in_time) AS check_in_date, 
---         COUNT(*) AS daily_count
--- FROM attendance
--- GROUP BY location_id, check_in_date
+--------! [MY OWN TESTING]: 4.1. SUB QUERY TO FIND daily_count COLUMN WHICH COUNTS VISITS GROUPED BY DATE & LOCATION !----------
+SELECT 
+        location_id, 
+        strftime('%Y-%m-%d', check_in_time) AS check_in_date, 
+        COUNT(*) AS daily_count
+FROM attendance
+GROUP BY location_id, check_in_date
 
+-------- *****  [MAIN QUERY/FINAL SOLUTION]: 4.2. USE SUBQUERY FROM 4.1. IN MAIN QUERY TO CALCULATE AVERAGE ***** ----------
 --------! Calculate the average daily attendance for each location !----------
---------! USE SUBQUERY IN MAIN QUERY TO CALCULATE AVERAGE !----------
 SELECT 
     l.name AS location_name,
     CAST(AVG(daily_count) AS INTEGER) AS avg_daily_attendance -- CAST AVG TO WHOLE NO.

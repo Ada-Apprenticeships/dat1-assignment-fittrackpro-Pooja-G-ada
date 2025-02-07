@@ -7,6 +7,7 @@ PRAGMA foreign_keys = ON;
 
 -- Equipment Management Queries
 
+-- ================================================================================================
 -- 1. Find equipment due for maintenance
 -- TODO: Write a query to find equipment due for maintenance
 SELECT 
@@ -18,6 +19,7 @@ WHERE next_maintenance_date >= DATE('now', '+1 day') -- skip today
    AND next_maintenance_date < DATE('now', '+30 days'); -- 30 days starting tomorrow
 
 
+-- ================================================================================================
 -- 2. Count equipment types in stock
 -- TODO: Write a query to count equipment types in stock
 SELECT 
@@ -26,6 +28,8 @@ SELECT
 FROM equipment
 GROUP BY type;
 
+
+-- ================================================================================================
 -- 3. Calculate average age of equipment by type (in days)
 -- TODO: Write a query to calculate average age of equipment by type (in days)
 SELECT 

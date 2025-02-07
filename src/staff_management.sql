@@ -7,6 +7,7 @@ PRAGMA foreign_keys = ON;
 
 -- Staff Management Queries
 
+-- ================================================================================================
 -- 1. List all staff members by role
 -- TODO: Write a query to list all staff members by role
 
@@ -18,10 +19,12 @@ SELECT
 FROM staff
 ORDER BY role; -- order the staff by their role
 
+
+-- ================================================================================================
 -- 2. Find trainers with one or more personal training session in the next 30 days
 -- TODO: Write a query to find trainers with one or more personal training session in the next 30 days
 
---------! 2.1 FIRST SUBQUERY TO FIND SESSIONS IN NEXT 30 DAYS !----------
+--------! [MY OWN TESTING]: 2.1. FIRST SUBQUERY TO FIND SESSIONS IN NEXT 30 DAYS !----------
 SELECT
     staff_id AS trainer_id,
     session_date
@@ -29,7 +32,7 @@ FROM personal_training_sessions
 WHERE session_date >= DATE('now') -- from today
    AND session_date < DATE('now', '+30 days'); -- 30 days starting tomorrow
 
---------! 2.2 USE JOIN TABLE ON SUBQUERY TABLE TO GET trainer name !----------
+--------! [MY OWN TESTING]: 2.2. USE JOIN TABLE ON SUBQUERY TABLE FORM 2.1 TO GET trainer name !----------
 SELECT
     pts.staff_id AS trainer_id,
     s.first_name || ' ' || s.last_name AS trainer_name,
@@ -39,8 +42,7 @@ JOIN staff s ON pts.staff_id = s.staff_id
 WHERE session_date >= DATE('now') -- from today
    AND session_date < DATE('now', '+30 days'); -- 30 days starting tomorrow
 
---------! 2.3 USE SUBQURY TABLE FORM 2.2 TO GET trainers with one or more personal training session !----------
---------! FINAL/MAIN QUERY !----------
+-------- *****  [MAIN QUERY/FINAL SOLUTION]: 2.3. USE SUBQURY TABLE FORM 2.2 TO GET trainers with one or more personal training session ***** ----------
 SELECT
     trainer_id,
     trainer_name,

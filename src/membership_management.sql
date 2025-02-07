@@ -7,6 +7,7 @@ PRAGMA foreign_keys = ON;
 
 -- Membership Management Queries
 
+-- ================================================================================================
 -- 1. List all active memberships
 -- TODO: Write a query to list all active memberships
 SELECT
@@ -20,6 +21,8 @@ FROM memberships ms
 JOIN members m ON ms.member_id = m.member_id
 WHERE status LIKE 'Active';
 
+
+-- ================================================================================================
 -- 2. Calculate the average duration of gym visits for each membership type
 -- TODO: Write a query to calculate the average duration of gym visits for each membership type
 SELECT 
@@ -31,6 +34,8 @@ JOIN members m ON a.member_id = m.member_id
 JOIN memberships ms ON a.member_id = ms.member_id
 GROUP BY membership_type;
 
+
+-- ================================================================================================
 -- 3. Identify members with expiring memberships this year
 -- TODO: Write a query to identify members with expiring memberships this year
 
