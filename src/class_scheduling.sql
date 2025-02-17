@@ -11,7 +11,7 @@ PRAGMA foreign_keys = ON;
 -- 1. List all classes with their instructors
 -- TODO: Write a query to list all classes with their instructors
 
-SELECT 
+SELECT DISTINCT
     cs.class_id,
     c.name AS class_name,
     s.first_name || ' ' || s.last_name AS instructor_name
@@ -29,13 +29,14 @@ SELECT
     c.name,
     cs.start_time,
     cs.end_time,
-    c.capacity AS available_spots
+    (c.capacity - COUNT(ca.class_attendance_id)) AS available_spots
 FROM class_schedule cs
 JOIN classes c on cs.class_id = c.class_id
+JOIN class_attendance ca ON cs.schedule_id = ca.schedule_id
 -- strftime('%Y-%m-%d', cs.start_time) --> extracts the year, month & day from the start_time column. 
 --The format string '%Y-%m-%d' returns in YYYY-MM--DD format.
-WHERE strftime('%Y-%m-%d', cs.start_time) LIKE '2025-02-01';
-
+WHERE strftime('%Y-%m-%d', cs.start_time) LIKE '2025-02-01'
+GROUP BY c.class_id, c.name, cs.start_time, cs.end_time, c.capacity;
 
 -- ================================================================================================
 -- 3. Register a member for a class
@@ -46,11 +47,13 @@ DELETE
 FROM class_attendance 
 WHERE member_id = 11 AND attendance_status = 'Registered';
 
--------- *****  [FINAL SOLUTION]: 1.2. Register member with ID 11 for the Spin Class (class_id 3) on '2025-02-01'  ***** -----
+-------- *****  [FINAL SOLUTION]: 3.2. Register member with ID 11 for the Spin Class (class_id 3) on '2025-02-01'  ***** -----
 INSERT INTO class_attendance (schedule_id, member_id, attendance_status)
 VALUES (7, 11, 'Registered');
 
 --------! [MY OWN TESTING]: 3.3. TO CHECK IF THE NEW RECORD ADDED !----------
+SELECT '-- [MY OWN TESTING] for 4.3: check added record -- ' AS comment;
+
 SELECT 
     ca.member_id,
     ca.schedule_id,
@@ -67,6 +70,8 @@ WHERE ca.member_id = 11 AND class_date = '2025-02-01';
 
 --------! [MY OWN TESTING]: 4.1. QUERY BELOW IS TO CHECK TOTAL YOGA BASIC CLASS ATTENDEES BEFORE CANCELLATION/DELETION !----------
 --------! THIS SHOWS 3 RECORDS WHICH HAS schedule_id = 7 BEFORE DELETION !-----
+SELECT '-- [MY OWN TESTING] for 4.4: check correct record selected-- ' AS comment;
+
 SELECT 
     ca.member_id,
     c.name AS class_name,
@@ -83,6 +88,8 @@ WHERE member_id = 2 AND schedule_id = 7;
 
 --------! [MY OWN TESTING]: 4.3. QUERY BELOW IS TO CHECK TOTAL YOGA BASIC CLASS ATTENDEES BEFORE CANCELLATION/DELETION !----------
 --------! DOESNT SHOW RECORD WEHRE member_id = 2 & schedule_id = 7 AFTER DELETION !-----
+SELECT '-- [MY OWN TESTING] for 4.4: deleted record not be listed-- ' AS comment;
+
 SELECT 
     ca.member_id,
     c.name AS class_name,
@@ -93,8 +100,9 @@ JOIN classes c ON cs.class_id = c.class_id
 WHERE cs.schedule_id = 7;
 
 -- ================================================================================================
--- 5. List top 5 most popular classes
--- TODO: Write a query to list top 5 most popular classes
+-- 5. List top 3 most popular classes
+-- TODO: Write a query to list top 3 most popular classes
+SELECT '-- 4.5 -- ' AS comment;
 
 SELECT 
     c.class_id,
@@ -105,7 +113,7 @@ JOIN class_schedule cs ON ca.schedule_id = cs.schedule_id
 JOIN classes c ON cs.class_id = c.class_id
 GROUP BY c.class_id --counts within group --> class
 ORDER BY registration_count DESC
-LIMIT 5;
+LIMIT 3;
 
 -- ================================================================================================
 -- 6. Calculate average number of classes per member
@@ -113,6 +121,7 @@ LIMIT 5;
 
 --COUNT(*) counts all attendance records (total classes attended).
 --COUNT(DISTINCT member_id) counts unique members who attended at least one class.
+SELECT '-- 4.6 -- ' AS comment;
 
 SELECT 
     ROUND((COUNT(*) * 1.0) / COUNT(DISTINCT member_id), 1) AS avg_classes_per_member

@@ -14,7 +14,7 @@ PRAGMA foreign_keys = ON;
 --------! [MY OWN TESTING]: 1.1. DELETE QUERY SO THAT SAME ROW DOES NOT GET ADDED/DUPLICATED EVERYTIME I RE-RAN THIS SQL FILE !----------
 DELETE 
 FROM payments 
-WHERE member_id = 11 AND payment_date = '2025-01-20 11:00:00';
+WHERE member_id = 11 AND payment_date = CURRENT_TIMESTAMP;
 
 -------- *****  [MAIN QUERY/FINAL SOLUTION]: 1.2. INSERT A NEW PAYMENT RECORD FOR MEMBER WITH ID 11  ***** ----------
 INSERT INTO payments (member_id, amount, payment_date, payment_method, payment_type)
@@ -33,7 +33,7 @@ LIMIT 1;
 
 SELECT 
     strftime('%Y-%m', payment_date) AS month, --extracts the year and month from the payment_date column. The format string '%Y-%m' returns the year and month in YYYY-MM format.
-    COUNT(*) AS total_revenue
+    SUM(amount) AS total_revenue
 FROM payments
 WHERE payment_date LIKE '%2024%'
 GROUP BY month

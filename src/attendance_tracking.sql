@@ -74,13 +74,13 @@ SELECT
         strftime('%Y-%m-%d', check_in_time) AS check_in_date, 
         COUNT(*) AS daily_count
 FROM attendance
-GROUP BY location_id, check_in_date
+GROUP BY location_id, check_in_date;
 
 -------- *****  [MAIN QUERY/FINAL SOLUTION]: 4.2. USE SUBQUERY FROM 4.1. IN MAIN QUERY TO CALCULATE AVERAGE ***** ----------
 --------! Calculate the average daily attendance for each location !----------
 SELECT 
     l.name AS location_name,
-    CAST(AVG(daily_count) AS INTEGER) AS avg_daily_attendance -- CAST AVG TO WHOLE NO.
+    ROUND(AVG(daily_count), 1) AS avg_daily_attendance -- ROUND AVG TO 1 dp.
 FROM (
     -- SUB QUERY: Count check-ins per location per day
     SELECT 

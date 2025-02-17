@@ -27,8 +27,8 @@ WHERE status LIKE 'Active';
 -- TODO: Write a query to calculate the average duration of gym visits for each membership type
 SELECT 
     ms.type AS membership_type,
-    --use AVG() function to calculate average after grouping by type, CAST/convert into integer to get whole no.
-    CAST (AVG(strftime('%s', check_out_time) - strftime('%s', check_in_time)) / 60 AS INTEGER) AS avg_visit_duration_minutes -- avg_visit_duration_minutes
+    --use AVG() function to calculate average after grouping by type, and ROUND() to round the average duration to the nearest minute
+    ROUND(AVG(strftime('%s', check_out_time) - strftime('%s', check_in_time)) / 60.0) AS avg_visit_duration_minutes
 FROM attendance a
 JOIN members m ON a.member_id = m.member_id
 JOIN memberships ms ON a.member_id = ms.member_id
