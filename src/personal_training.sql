@@ -6,11 +6,15 @@
 PRAGMA foreign_keys = ON;
 
 -- Personal Training Queries
+-- =========================================================== [TASK 8.1] ====================================================================================
+-- ===========================================================================================================================================================
 
 -- 1. List all personal training sessions for a specific trainer
 -- TODO: Write a query to list all personal training sessions for a specific trainer
 
---------! List all personal training sessions for specific trainer "Ivy Irwin" !----------
+SELECT '*********** <<< [SQL QUERY RESULT] for 8.1 >>> *********** ' AS '-----------------------------------------------------------------'; -- Comment to print on console
+--      *********** <<< [SQL QUERY SOLUTION] for 8.1 >>> *********** 
+--      *********** <<< List all personal training sessions for specific trainer "Ivy Irwin" >>> *********** 
 SELECT 
     pts.session_id,
     m.first_name || ' ' || m.last_name AS member_name, --put first name and last name together 
@@ -21,6 +25,7 @@ SELECT
 FROM personal_training_sessions pts
 JOIN staff s ON pts.staff_id = s.staff_id
 JOIN members m ON pts.member_id = m.member_id
-WHERE staff_name LIKE 'Ivy Irwin'; -- printed out this column just to make sure query is for the correct trainer
+WHERE staff_name LIKE 'Ivy Irwin'; 
 
--- ================================================================================================
+-- ===========================================================================================================================================================
+-- ===========================================================================================================================================================
